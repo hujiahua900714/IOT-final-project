@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NFC Pay</string>
+    <string name="app_name">QR Pay</string>
     <string-array name="city_array">
         <item>連江縣</item>
         <item>彰化縣</item>

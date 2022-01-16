@@ -73,12 +73,6 @@
             android:id="@+id/payBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <Button
-            android:layout_margin="8dp"
-            android:text="登出"
-            android:id="@+id/logoutBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

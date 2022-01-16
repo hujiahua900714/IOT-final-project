@@ -64,7 +64,7 @@ public class DatabaseActivity extends AppCompatActivity {
         mainBtn = (Button) findViewById(R.id.mainBtn);
         dbBtn = (Button) findViewById(R.id.dbBtn);
         payBtn = (Button) findViewById(R.id.payBtn);
-        logoutBtn = (Button) findViewById(R.id.logoutBtn);
+
         listBtn = (Button) findViewById(R.id.listBtn);
 
         //DataBaseTable = dbHelper.getTableName();

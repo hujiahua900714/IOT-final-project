@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         mainBtn = (Button) findViewById(R.id.mainBtn);
         dbBtn = (Button) findViewById(R.id.dbBtn);
         payBtn = (Button) findViewById(R.id.payBtn);
-        logoutBtn = (Button) findViewById(R.id.logoutBtn);
 
         label = (TextView) findViewById(R.id.label);
         weatherDataTxt = (TextView) findViewById(R.id.weatherDataTxt);
