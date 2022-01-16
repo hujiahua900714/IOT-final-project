@@ -13,48 +13,28 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="8dp"
         android:padding="8dp">
+        <com.budiyev.android.codescanner.CodeScannerView
+            android:id="@+id/cameraView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:autoFocusButtonColor="@android:color/white"
+            app:autoFocusButtonVisible="true"
+            app:flashButtonColor="@android:color/white"
+            app:flashButtonVisible="true"
+            app:frameColor="@android:color/white"
+            app:frameCornersSize="50dp"
+            app:frameCornersRadius="0dp"
+            app:frameAspectRatioWidth="1"
+            app:frameAspectRatioHeight="1"
+            app:frameSize="0.75"
+            app:frameThickness="2dp"
+            app:maskColor="#77000000"/>
         <TextView
-            android:text="傳資料"
+            android:id="@+id/uriText"
+            android:text=""
             android:textSize="32dp"
-            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <EditText
-                android:text=""
-                android:textSize="28dp"
-                android:textColor="@color/black"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"/>
-            <Button
-                android:id="@+id/sendBtn"
-                android:text="傳送"
-                android:textSize="28dp"
-                android:layout_width="108dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <TextView
-            android:text="收資料"
-            android:textSize="32dp"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="108dp"
-            android:padding="8dp">
-            <TextView
-                android:id="@+id/resultTxt"
-                android:layout_marginLeft="16dp"
-                android:text=""
-                android:textSize="28dp"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </ScrollView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +50,7 @@
             android:layout_height="wrap_content"/>
         <Button
             android:layout_margin="8dp"
-            android:text="database"
+            android:text="@string/databaseBtn"
             android:id="@+id/dbBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -83,6 +63,12 @@
             android:clickable="false"
             android:backgroundTint="@color/holo_blue_dark"
             android:textColor="@color/black"/>
+        <Button
+            android:layout_margin="8dp"
+            android:text="登出"
+            android:id="@+id/logoutBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

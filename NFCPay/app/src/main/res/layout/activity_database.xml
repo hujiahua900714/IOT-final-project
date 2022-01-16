@@ -13,44 +13,40 @@
         app:layout_constraintTop_toTopOf="parent"
         android:padding="8dp">
 
-
-        <Button
-            android:id="@+id/renewBtn"
-            android:text="renew data"
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
+        <org.eazegraph.lib.charts.BarChart
+            android:layout_marginVertical="16dp"
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="480dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:clickable="true"/>
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:padding="8dp">
-            <TextView
-                android:id="@+id/jsonTxt"
-                android:text="2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n"
-                android:textSize="24dp"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </ScrollView>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:padding="8dp">
-            <LinearLayout
-                android:id="@+id/dbLayout"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"/>
-        </ScrollView>
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/buttonBar"
+        android:padding="4dp">
 
+        <Button
+            android:layout_margin="4dp"
+            android:text="查看清單"
+            android:id="@+id/listBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/buttonBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -64,7 +60,7 @@
             android:layout_height="wrap_content"/>
         <Button
             android:layout_margin="8dp"
-            android:text="database"
+            android:text="@string/databaseBtn"
             android:id="@+id/dbBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,6 +71,12 @@
             android:layout_margin="8dp"
             android:text="pay"
             android:id="@+id/payBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_margin="8dp"
+            android:text="登出"
+            android:id="@+id/logoutBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

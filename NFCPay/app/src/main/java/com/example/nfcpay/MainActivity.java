@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,8 +14,12 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -31,20 +36,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Vector;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    Button mainBtn, dbBtn, payBtn;
+    ArrayList<weatherdata>cityweather = new ArrayList<weatherdata>();
+
+    Button mainBtn, dbBtn, payBtn, logoutBtn;
+    Spinner spinner;
 
     String[] permissionCode = new String[] {
             Manifest.permission.INTERNET,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE };
 
-    TextView weatherTxt;
+    TextView label;
     TextView weatherDataTxt;
     String TAG = "MainActivity";
     String getWeatherURL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/" +
@@ -58,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             "&elementName=MinT,MaxT,Wx" +
             "&sort=time";
     Gson gson = new Gson();
+
     String weatherData;
     URL url;
     File fileDirectory;
@@ -77,9 +90,46 @@ public class MainActivity extends AppCompatActivity {
         mainBtn = (Button) findViewById(R.id.mainBtn);
         dbBtn = (Button) findViewById(R.id.dbBtn);
         payBtn = (Button) findViewById(R.id.payBtn);
+        logoutBtn = (Button) findViewById(R.id.logoutBtn);
 
-        weatherTxt = (TextView) findViewById(R.id.weatherTxt);
+        label = (TextView) findViewById(R.id.label);
         weatherDataTxt = (TextView) findViewById(R.id.weatherDataTxt);
+
+        label.setText("天氣預報");
+        //Spinner
+        spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter =
+                ArrayAdapter.createFromResource(this,
+                        R.array.city_array,
+                        android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(2, false);
+        AdapterView.OnItemSelectedListener spnOnItemSelected
+                = new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+                String sPos=String.valueOf(pos);
+                String text = "";
+                String sInfo=parent.getItemAtPosition(pos).toString();
+                for(weatherdata i : cityweather){
+                    if(i.getCity().equals(sInfo)){
+                        text += i.getCity() + "\n";
+                        for(int j = 0;j < 3; j++){
+                            text += i.getvalue("time",j) + "\n" + i.getvalue("weather",j) + "\n"
+                                    + "最高溫: " + i.getvalue("htemp",j) + "度\n" + "最低溫: " +i.getvalue("ltemp",j) + "度\n";
+                        }
+                        weatherDataTxt.setText(text);
+                        break;
+                    }
+                }
+                //String sInfo=parent.getSelectedItem().toString();
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+                //
+            }
+        };
+        spinner.setOnItemSelectedListener(spnOnItemSelected);
 
         handler = new Handler();
 
@@ -189,7 +239,6 @@ public class MainActivity extends AppCompatActivity {
                     fileReader.close();
                     ret = stringBuilder.toString();
                     weatherData = ret;
-                    weatherTxt.setText(ret);
                 }
             } catch (FileNotFoundException e) {
                 Log.e("login activity", "File not found: " + e.toString());
@@ -208,6 +257,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void setWeatherData() throws JSONException {
+        int count = 0;
+        String cityname = "",elementname = "",weather = "",time = "",htemp = "",ltemp = "";
         JSONObject jsonObject = new JSONObject(weatherData);
         String allData = jsonObject.getString("records");
         JSONObject jsonObjectAllLocationData = new JSONObject(allData);
@@ -219,26 +270,52 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < allLocationData.length(); i++) {
             JSONObject jsonObjectLocationData = (JSONObject) allLocationData.get(i);
             test = test + jsonObjectLocationData.getString("locationName") + "\n";
+            cityname = jsonObjectLocationData.getString("locationName");
 
             JSONArray allWeatherElementData = jsonObjectLocationData.getJSONArray("weatherElement");
             Log.v("allWeatherElementData", String.valueOf(allWeatherElementData.length()));
 
             for(int j = 0; j < allWeatherElementData.length(); j++) {
                 test = test + ((JSONObject)allWeatherElementData.get(j)).getString("elementName") + "\n";
+                elementname = ((JSONObject)allWeatherElementData.get(j)).getString("elementName");
                 JSONArray allTimeData = ((JSONObject)allWeatherElementData.get(j)).getJSONArray("time");
                 Log.v("allTimeData", String.valueOf(allTimeData.length()));
-
+                count = 0;
                 for(int k = 0; k < allTimeData.length(); k++) {
                     JSONObject jsonObjectSingleData = (JSONObject) allTimeData.get(k);
                     test = test + jsonObjectSingleData.get("startTime") + "\n";
+                    if(count == 0){
+                        time += (jsonObjectSingleData.getString("startTime")) + "|";
+                    }
                     JSONObject jsonObjectSingleDataElement = jsonObjectSingleData.getJSONObject("parameter");
                     test = test + jsonObjectSingleDataElement.getString("parameterName") + " " +
                             /*jsonObjectSingleDataElement.getString("parameterUnit") + */"\n";
+                    if(elementname.equals("Wx")){
+                        weather += (jsonObjectSingleDataElement.getString("parameterName")) + "|";
+                    }else if(elementname.equals("MinT")){
+                        ltemp += (jsonObjectSingleDataElement.getString("parameterName")) + "|";
+                    }else if(elementname.equals("MaxT")){
+                        htemp += (jsonObjectSingleDataElement.getString("parameterName")) + "|";
+                    }
                 }
+                count++;
             }
+            cityweather.add(new weatherdata(cityname,weather,time,htemp,ltemp));
+            Log.v("city name", cityname);
+            Log.v("i-th", String.valueOf(i));
+            Log.v("size",String.valueOf(cityweather.size()));
+            /*for(int j = 0; j < cityweather.size(); j++) {
+                Log.v("j-th",String.valueOf(j));
+                Log.v("city",cityweather.get(j).getCity());
+                Log.v("Htemp", cityweather.get(j).getHtemp().toString());
+            }*/
+            weather = "";
+            time = "";
+            htemp = "";
+            ltemp = "";
         }
 
-        weatherDataTxt.setText(test);
+        //weatherDataTxt.setText(test);
     }
 
     public void setPermission() {
@@ -253,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     @Override
     protected void onNewIntent(Intent intent) {

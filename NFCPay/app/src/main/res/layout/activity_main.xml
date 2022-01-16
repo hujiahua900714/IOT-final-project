@@ -12,30 +12,25 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="8dp">
-        <ScrollView
+        <TextView
+            android:id="@+id/label"
+            android:text=""
+            android:textSize="24dp"
+            android:textColor="@color/holo_blue_dark"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:padding="8dp">
-            <TextView
-                android:id="@+id/weatherTxt"
-                android:text="2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n"
-                android:textSize="24dp"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </ScrollView>
-        <ScrollView
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:padding="8dp">
-            <TextView
-                android:id="@+id/weatherDataTxt"
-                android:text="2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n2\n"
-                android:textSize="24dp"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </ScrollView>
+            android:layout_height="wrap_content" >
+        </Spinner>
+        <TextView
+            android:id="@+id/weatherDataTxt"
+            android:text=""
+            android:textSize="24dp"
+            android:textColor="@color/holo_blue_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +49,7 @@
             android:textColor="@color/black"/>
         <Button
             android:layout_margin="8dp"
-            android:text="database"
+            android:text="@string/databaseBtn"
             android:id="@+id/dbBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -62,6 +57,12 @@
             android:layout_margin="8dp"
             android:text="pay"
             android:id="@+id/payBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_margin="8dp"
+            android:text="登出"
+            android:id="@+id/logoutBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

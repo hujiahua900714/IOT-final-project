@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/code/AndroidStudio/Final/NFCPay/app/src/main/res/layout/activity_database.xml" value="0.24909420289855072" />
+        <entry key="..\:/code/AndroidStudio/Final/NFCPay/app/src/main/res/layout/activity_list.xml" value="0.1046875" />
+        <entry key="..\:/code/AndroidStudio/Final/NFCPay/app/src/main/res/layout/activity_login.xml" value="0.2151268115942029" />
         <entry key="..\:/code/AndroidStudio/Final/NFCPay/app/src/main/res/layout/activity_main.xml" value="0.2390625" />
-        <entry key="..\:/code/AndroidStudio/Final/NFCPay/app/src/main/res/layout/activity_pay.xml" value="0.24909420289855072" />
+        <entry key="..\:/code/AndroidStudio/Final/NFCPay/app/src/main/res/layout/activity_pay.xml" value="0.264" />
       </map>
     </option>
   </component>
